@@ -38,7 +38,7 @@ class Player extends Entity {
 
     update() {
         this.body.setVelocity(0, 0);
-
+// stop the player moving off the screen
         this.x = Phaser.Math.Clamp(this.x, 0, this.scene.game.config.width);
         this.y = Phaser.Math.Clamp(this.y, 0, this.scene.game.config.height);
     }
