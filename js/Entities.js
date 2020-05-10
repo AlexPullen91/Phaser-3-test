@@ -43,3 +43,28 @@ class Player extends Entity {
         this.y = Phaser.Math.Clamp(this.y, 0, this.scene.game.config.height);
     }
 }
+
+// enemy ships
+
+class ChaserShip extends Entity {
+    constructor(scene, x, y) {
+        super(scene, 7, "sprEnemy1", "ChaserShip");
+        this.body.velocity.y = Phaser.Math.Between(50, 100);
+    }
+}
+
+class GunShip extends Entity {
+    constructor(scene, x, y) {
+        super(scene, x, y, "sprEnemy0", "GunShip");
+        this.body.velocity.y = Phaser.Math.Between(50, 100);
+        this.play("sprEnemy0");
+    }
+}
+
+class CarrierShip extends Entity {
+    constructor(scene, x, y) {
+        super(scene, x, y, "sprEnemy2", "CarrierShip");
+        this.body.velocity.y = Phaser.Math.Between(50, 100);
+        this.play("sprEnemy2");
+    }
+}
