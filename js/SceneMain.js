@@ -31,7 +31,7 @@ class SceneMain extends Phaser.Scene {
         this.load.audio("sndLaser", "content/sndLaser.wav");
     }
 
-    
+    // animations
     create() {
         this.anims.create({
             key: "sprEnemy0",
@@ -60,7 +60,7 @@ class SceneMain extends Phaser.Scene {
             frameRate: 20,
             repeat: -1
         });
-
+// sound effects
         this.sfx = {
             explosions: [
                 this.sound.add("sndExplode0"),
