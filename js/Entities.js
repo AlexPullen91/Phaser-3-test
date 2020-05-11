@@ -61,6 +61,13 @@ class Player extends Entity {
     }
 }
 
+class PlayerLaser extends Entity {
+    constructor(scene, x, y) {
+        super(scene, x, y, "sprLaserPlayer");
+        this.body.velocity.y = -200;
+    }
+}
+
 // enemies get lasers
 
 class EnemyLaser extends Entity {
