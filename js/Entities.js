@@ -17,6 +17,10 @@ class Player extends Entity {
         this.setData("speed", 200);
         this.play("sprPlayer");
 
+        this.setData("isShooting", false);
+        this.setData("timerShootingDelay", 10);
+        this.setData("timershootTick", this.getData("timerShootDelay") - 1);
+
 
     }
 
@@ -41,6 +45,19 @@ class Player extends Entity {
 // stop the player moving off the screen
         this.x = Phaser.Math.Clamp(this.x, 0, this.scene.game.config.width);
         this.y = Phaser.Math.Clamp(this.y, 0, this.scene.game.config.height);
+
+        if (this.getData("isShooting")) {
+            if (this.getData("timerShootTick") < this.getData("timerShootDelay")) {
+                this.setData("timerShootTick", this.getData("timerShootTick") + 1); // every game update, increase
+            }
+            else { // when the "manual timer" is triggered:
+                var laser = new PlayerLaser(this.scene, this.x, this.y);
+                this.scene.playerLasers.add(laser);
+
+                this.scene.sfx.laser.play(); // play laser sfx
+                this.setData("timerShootTick", 0);
+            }
+        }
     }
 }
 
@@ -58,7 +75,7 @@ class EnemyLaser extends Entity {
 
 class ChaserShip extends Entity {
     constructor(scene, x, y) {
-        super(scene, 7, "sprEnemy1", "ChaserShip");
+        super(scene, x, y, "sprEnemy1", "ChaserShip");
 
         this.body.velocity.y = Phaser.Math.Between(50, 100);
 

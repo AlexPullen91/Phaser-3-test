@@ -106,12 +106,6 @@ class SceneMain extends Phaser.Scene {
                     enemy.setScale(Phaser.Math.Between(10, 20) * 0.1);
                     this.enemies.add(enemy);
                 }
-                // var enemy = new GunShip(
-                //     this,
-                //     Phaser.Math.Between(0, this.game.config.width),
-                //     0
-                // );
-                // this.enemies.add(enemy);
             },
             callbackScope: this,
             loop: true
@@ -160,6 +154,12 @@ class SceneMain extends Phaser.Scene {
         }
         else if (this.keyD.isDown) {
             this.player.moveRight();
+        }
+
+        for (var i = 0; i < this.enemies.getChildren().length; i++) {
+            var enemy = this.enemies.getChildren()[i];
+
+            enemy.update();
         }
     };
 };
