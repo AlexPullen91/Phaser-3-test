@@ -168,8 +168,10 @@ class SceneMain extends Phaser.Scene {
   }
 
   update() {
-    this.player.update();
 
+    if (!this.player.getData("isDead")) {
+
+    this.player.update();
     if (this.keyW.isDown) {
       this.player.moveUp();
     } else if (this.keyS.isDown) {
@@ -190,6 +192,7 @@ class SceneMain extends Phaser.Scene {
         this.player.getData("timerShootDelay") - 1
       );
       this.player.setData("isShooting", false);
+    } 
     }
 
     for (var i = 0; i < this.enemies.getChildren().length; i++) {
