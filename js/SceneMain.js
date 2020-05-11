@@ -72,6 +72,7 @@ class SceneMain extends Phaser.Scene {
     this.enemies = this.add.group();
     this.enemyLasers = this.add.group();
     this.playerLasers = this.add.group();
+
     // spawn enemies
 
     this.time.addEvent({
@@ -108,6 +109,35 @@ class SceneMain extends Phaser.Scene {
       },
       callbackScope: this,
       loop: true,
+    });
+
+    // collision code
+
+    this.physics.add.collider(this.playerLasers, this.enemies, function(playerLaser, enemy) {
+        if (enemy) {
+            if (enemy.onDestroy !== undefined) {
+                enemy.onDestroy();
+            }
+
+            enemy.explode(true);
+            playerLaser.destroy();
+        }
+    });
+
+    this.physics.add.overlap(this.player, this.enemies, function(player, enemy) {
+        if (!player.getData("isDead") &&
+        !enemy.getData("isDead")) {
+            player.explode(false);
+            enemy.explode(true);
+        }
+    });
+
+    this.physics.add.overlap(this.player, this.enemyLasers, function(player, laser) {
+        if (!player.getData("isDead") &&
+        !laser.getData("isDead")) {
+            player.explode(false);
+            laser.destroy();
+        }
     });
 
     this.anims.create({
