@@ -53,6 +53,28 @@ class SceneMain extends Phaser.Scene {
       frameRate: 20,
       repeat: 0,
     });
+
+    this.anims.create({
+      key: "sprPlayer",
+      frames: this.anims.generateFrameNumbers("sprPlayer"),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+    this.sfx = {
+      explosions: [
+        this.sound.add("sndExplode0"),
+        this.sound.add("sndExplode1"),
+      ],
+      laser: this.sound.add("sndLaser"),
+    };
+
+    this.backgrounds = [];
+    for (var i = 0; i < 5; i++) {
+        var bg = new ScrollingBackground(this, "sprBg0", i * 10);
+        this.backgrounds.push(bg);
+    }
+
     // creates instance of player
     this.player = new Player(
       this,
@@ -139,21 +161,6 @@ class SceneMain extends Phaser.Scene {
             laser.destroy();
         }
     });
-
-    this.anims.create({
-      key: "sprPlayer",
-      frames: this.anims.generateFrameNumbers("sprPlayer"),
-      frameRate: 20,
-      repeat: -1,
-    });
-    // sound effects
-    this.sfx = {
-      explosions: [
-        this.sound.add("sndExplode0"),
-        this.sound.add("sndExplode1"),
-      ],
-      laser: this.sound.add("sndLaser"),
-    };
   }
 
   getEnemiesByType(type) {
@@ -244,6 +251,10 @@ class SceneMain extends Phaser.Scene {
           laser.destroy();
         }
       }
+    }
+
+    for (var i = 0; i < this.backgrounds.length; i++) {
+        this.backgrounds[i].update();
     }
   }
 }
